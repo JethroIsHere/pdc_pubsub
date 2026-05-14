@@ -43,12 +43,14 @@ python publisher.py
 
 ## Testing the Offline Queue (Option 2)
 1. Start the `broker`.
-2. Start a `subscriber`, use ID **"Alice"** and topic **"tech"**.
-3. Close the `subscriber` terminal (`Ctrl+C`).
-4. Start a `publisher` and send a few messages to the **"tech"** topic (e.g., `tech:New smartphone released!`, `tech:AI is taking over!`).
-5. Notice the broker terminal says `[*] Buffered message for offline user: Alice`.
-6. Start the `subscriber` again, using the **SAME ID** (**"Alice"**) and topic **"tech"**.
-7. The subscriber will instantly receive the missed messages through the catch-up mechanism!
+2. Start a `subscriber`, type unique user ID, eg. **"User1"**, and topic **"tech"**.
+3. Now, start a `publisher` from another split terminal and send a few messages to the **"tech"** topic. The format should be 'topic:message' (e.g., `tech:New smartphone released!`, `tech:AI is taking over!`).
+4. Let's simulate the crash. Close the `subscriber` terminal by force delete that split terminal.
+5. Notice the broker terminal says `[*] User1 is offline`.
+6. Go back t a `publisher` and send a few messages to the **"tech"** topic (e.g., `tech:New smartphone released!`, `tech:AI is taking over!`).
+7. Notice the broker terminal says `[*] Buffered message for offline user: Alice`.
+8. Start the `subscriber` again through a new split terminal, using the **SAME ID** (**"User1"**) and topic **"tech"**.
+9. The subscriber will instantly receive the missed messages through the catch-up mechanism!
 
 ## Protocol Details
 This system uses a custom text-based protocol over TCP byte streams:
